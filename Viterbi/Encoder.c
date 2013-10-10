@@ -10,7 +10,7 @@ int falt_output_table[4][2] = {
 };
 int falt_state_table[4][2] = { 
 // Input: 0  1
-		 {0, 2}, // Current state = 00
+		   {0, 2}, // Current state = 00
 	     {0, 2}, // Current state = 01
 	     {1, 3}, // Current state = 10
 	     {1, 3}  // Current state = 11 
