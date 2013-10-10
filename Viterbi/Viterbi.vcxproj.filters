@@ -27,6 +27,9 @@
     <ClCompile Include="Util.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Decoder.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h">
