@@ -9,6 +9,11 @@
 // Number of encoder cycles an input bit is retained and used for encoding 
 // after it first appears at the input to the convolutional encoder
 #define m 2
+// Number of states
+#define NUMBER_OF_STATES 4
+
+int output_table[4][2];
+int next_state_table[4][2];
 
 Message falt_encoder(Data data);
 
