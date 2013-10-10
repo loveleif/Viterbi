@@ -1,15 +1,30 @@
 #include<stdio.h>
 #include "Source.h"
 #include "Encoder.h"
+#include "Util.h"
 
 int main() {
-	printf("%x -> %x\n", 0, falt_encoder(0));
-	printf("%x -> %x\n", 1, falt_encoder(1));
-	printf("%x -> %x\n", 2, falt_encoder(2));
-	printf("%x -> %x\n", 3, falt_encoder(3));
-	printf("%x -> %x\n", 4, falt_encoder(4));
-	printf("%x -> %x\n", 5, falt_encoder(5));
-	printf("%x -> %x\n", 6, falt_encoder(6));
+  int in, out;
+
+  in = 0; out = falt_encoder(in);
+  printf("%d -> %d\n", in, out);
+	printf("%s -> ", byte_to_binary(in));
+  printf("%s\n", byte_to_binary(out));
+
+  in = 1; out = falt_encoder(in);
+  printf("%d -> %d\n", in, out);
+	printf("%s -> ", byte_to_binary(in));
+  printf("%s\n", byte_to_binary(out));
+
+  in = 3; out = falt_encoder(in);
+  printf("%d -> %d\n", in, out);
+	printf("%s -> ", byte_to_binary(in));
+  printf("%s\n", byte_to_binary(out));
+
+  in = 11; out = falt_encoder(in);
+  printf("%d -> %d\n", in, out);
+	printf("%s -> ", byte_to_binary(in));
+  printf("%s\n", byte_to_binary(out));
 
 	printf("\n");
 	return 0;
