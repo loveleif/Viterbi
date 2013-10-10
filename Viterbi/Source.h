@@ -1,5 +1,5 @@
-#ifndef ENCODING_SOURCE_H
-#define ENCODING_SOURCE_H
+#ifndef VITERBI_SOURCE_H
+#define VITERBI_SOURCE_H
 
 #include <stdlib.h>
 #include "Data.h"

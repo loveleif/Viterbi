@@ -1,5 +1,5 @@
-#ifndef ENCODING_ENCODER_H
-#define ENCODING_ENCODER_H
+#ifndef VITERBI_ENCODER_H
+#define VITERBI_ENCODER_H
 
 #include "Data.h"
 
