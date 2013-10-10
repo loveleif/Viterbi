@@ -7,6 +7,6 @@
 #include <stdlib.h>
 
 
-char *byte_to_binary(int x);
+char *byte_to_binary(int x, int digits);
 
 #endif

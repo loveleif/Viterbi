@@ -1,14 +1,16 @@
 #include "Util.h"
 
-/* http://stackoverflow.com/a/112956 */
-char* byte_to_binary(int x) {
-  int z;
-  static char b[9];
-  b[0] = '\0';
 
-  for (z = 128; z > 0; z >>= 1) {
-    strcat(b, ((x & z) == z) ? "1" : "0");
-   }
-
-  return b;
+char* byte_to_binary(int x, int digits) {
+  int i;
+  static char out[33];
+  
+  for (i = 0; i < digits; ++i) {
+    if ((x >> digits - i - 1) & 1)
+      out[i] = '1';
+    else
+      out[i] = '0';
+  }
+  out[digits] = '\0';
+  return out;
 }
