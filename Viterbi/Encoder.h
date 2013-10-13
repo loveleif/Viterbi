@@ -2,6 +2,8 @@
 #define VITERBI_ENCODER_H
 
 #include "Data.h"
+#include "Util.h"
+#include<stdio.h>
 
 // The "length" of the convolutional encoder, i.e. how many k-bit stages are 
 // available to feed the combinatorial logic that produces the output symbols

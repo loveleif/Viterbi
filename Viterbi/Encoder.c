@@ -1,5 +1,4 @@
 #include "Encoder.h"
-#include<stdio.h>
 
 int output_table[4][2] = { 
 // Input: 0  1
@@ -20,11 +19,15 @@ Message falt_encoder(Data data) {
 	int state = 0, input, output, i, bit;
 	Message message = 0;
 
-	for (i = 7; i != -1; --i) {
+	for (i = DATA_SIZE - 1; i != -1; --i) {
 		input = (data >> i) & 1;
-		state = next_state_table[state][input];
-		output = next_state_table[state][input];
-		message |= output << 2*i;
+		output = output_table[state][input];
+		message <<= m;
+    message |= output;
+    
+    state = next_state_table[state][input];
 	}
+  message <<= 2*m;
 	return message;
 }
+
