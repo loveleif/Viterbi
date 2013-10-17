@@ -1,5 +1,10 @@
 #include "Encoder.h"
 
+enum encoder_state { UNINITIALIZED, INITIALIZED };
+enum encoder_state this_encoder_state = UNINITIALIZED;
+
+Message encoding_table[256];
+
 int output_table[4][2] = { 
 // Input: 0  1
 		 {0, 3}, // Current state = 00
@@ -25,3 +30,14 @@ Message falt_encoder(Data data) {
 	return message;
 }
 
+Message memory_falt_encoder(Data data) {
+  if (this_encoder_state == UNINITIALIZED)
+    initialize_encoding_table();
+  return encoding_table[data];
+}
+
+void initialize_encoding_table() {
+  int i;
+  for (i = 0; i < 256; ++i)
+    encoding_table[i] = falt_encoder(i);
+}

@@ -3,6 +3,7 @@
 #include "Encoder.h"
 #include "Util.h"
 #include "Decoder.h"
+#include "DecoderBrute.h"
 int main() {
   int in, out;
   /*
@@ -30,6 +31,10 @@ int main() {
   in = 0x5C; out = falt_encoder(in);
   printf("%s -> ", byte_to_binary(in, 8));
   printf("%s\n", byte_to_binary(out, 20));
+
+  printf("  Kod: %s\n", byte_to_binary(in, 8));
+  printf("Avkod: %s\n", byte_to_binary(brute_force_viterbi_decoder(out), 8));
+
   //viterbi_decoder(0x1);
 
 	printf("\n");

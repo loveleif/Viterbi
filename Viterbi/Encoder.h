@@ -18,5 +18,7 @@ int output_table[4][2];
 int next_state_table[4][2];
 
 Message falt_encoder(Data data);
+Message memory_falt_encoder(Data data);
+void initialize_encoding_table();
 
 #endif
