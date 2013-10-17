@@ -30,6 +30,9 @@
     <ClCompile Include="Decoder.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DecoderBrute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Decoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoderBrute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

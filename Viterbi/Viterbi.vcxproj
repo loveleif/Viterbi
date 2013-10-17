@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DecoderBrute.cpp" />
     <ClCompile Include="Decoder.c" />
     <ClCompile Include="Encoder.c" />
     <ClCompile Include="Main.c" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="Data.h" />
     <ClInclude Include="Decoder.h" />
+    <ClInclude Include="DecoderBrute.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Source.h" />
     <ClInclude Include="Util.h" />

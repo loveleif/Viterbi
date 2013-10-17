@@ -7,13 +7,6 @@ int output_table[4][2] = {
 		 {2, 1}, // Current state = 10
 		 {1, 2}  // Current state = 11 
 };
-int next_state_table[4][2] = { 
-// Input: 0  1
-		   {0, 2}, // Current state = 00
-	     {0, 2}, // Current state = 01
-	     {1, 3}, // Current state = 10
-	     {1, 3}  // Current state = 11 
-};
 
 Message falt_encoder(Data data) {
 	int state = 0, input, output, i, bit;
@@ -25,7 +18,8 @@ Message falt_encoder(Data data) {
 		message <<= m;
     message |= output;
     
-    state = next_state_table[state][input];
+    state = (state >> 1);
+    state |= input << 1;
 	}
   message <<= 2*m;
 	return message;
