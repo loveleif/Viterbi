@@ -3,7 +3,7 @@
 
 char* byte_to_binary(int x, int digits) {
   int i;
-  static char out[33];
+  static char out[64];
   
   for (i = 0; i < digits; ++i) {
     if ((x >> digits - i - 1) & 1)

@@ -3,7 +3,9 @@
 
 #include <limits.h>
 #include "Data.h"
-
-Data viterbi_decoder(Message data);
+#include "Encoder.h"
+#include "Util.h"
+#include <math.h>
+Data viterbi_decoder(Message encoded_message);
 
 #endif
