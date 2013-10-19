@@ -25,60 +25,44 @@ int random_in_range(unsigned int min, unsigned int max)
 }
 
 int main() {
-  int i, in, out, outerr, decoded, errors = 0;
-  int in, out, i, j;
+  int i, j, in, out, outerr, decoded, errors = 0;
 
   init_output_table();
   init_encoding_table();
-  /*
-  in = 0; out = falt_encoder(in);
-  printf("%d -> %d\n", in, out);
-	printf("%s -> ", byte_to_binary(in));
-  printf("%s\n", byte_to_binary(out));
+  
+  printf("K = %d\n", K);
+  printf("m = %d\n", m);
+  printf("ENCODER_n = %d\n", ENCODER_n);
+  printf("NUMBER_OF_STATES = %d\n", NUMBER_OF_STATES);
+  printf("generator_polynomial:\n");
+  for (i = 0; i < ENCODER_n; ++i) {
+    printf("{ ");
+    for (j = 0; j < K; ++j) {
+      printf(" %d ", generator_polynomial[i][j]);
+    }
+    printf(" }\n");
+  }
 
-  in = 1; out = falt_encoder(in);
-  printf("%d -> %d\n", in, out);
-	printf("%s -> ", byte_to_binary(in));
-  printf("%s\n", byte_to_binary(out));
+  printf("\n\n");
 
-  in = 3; out = falt_encoder(in);
-  printf("%d -> %d\n", in, out);
-	printf("%s -> ", byte_to_binary(in));
-  printf("%s\n", byte_to_binary(out));
-
-  in = 11; out = falt_encoder(in);
-  printf("%d -> %d\n", in, out);
-	printf("%s -> ", byte_to_binary(in));
-  printf("%s\n", byte_to_binary(out));
-
-  for (i = 0; i < 10000; ++i) {
-	  in = random_in_range(0, 0xFF);
+  for (i = 0; i < 100000; ++i) {
+    in = random_in_range(0, DATA_MAX);
 	  out = memory_falt_encoder(in);
-	  outerr = out ^ (1 << random_in_range(0,8));
-	  outerr = outerr ^ (1 << random_in_range(0,8));
+    outerr = out ^ (1 << random_in_range(0,DATA_SIZE));
 	  decoded = brute_force_viterbi_decoder(outerr);
 	  if (decoded != in) ++errors;
 	  //printf("decoded: %d   in: %d   outerr: %d\n", decoded, in, inerr);
   }
-  printf("Errors: %d", errors);
+  printf("Errors: %d\n", errors);
+  
   /*
-  in = 0x5C; out = falt_encoder(in);
-  printf("%s -> ", byte_to_binary(in, 8));
-  printf("%s\n", byte_to_binary(out, 20));
-
-  printf("  Kod: %s\n", byte_to_binary(in, 8));
-  printf("Avkod: %s\n", byte_to_binary(brute_force_viterbi_decoder(out), 8));
-  */
-
-  //viterbi_decoder(0x1);
-
   for (i = 0; i != NUMBER_OF_STATES; ++i) {
     for (j = 0; j != ENCODER_n; ++j) {
       printf("%d   ", output_table[i][j]);
     }
     printf("\n");
   }
-
+  */
 	printf("\n");
 	return 0;
 }

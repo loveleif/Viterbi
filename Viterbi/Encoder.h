@@ -15,6 +15,7 @@
 #define ENCODER_n 2
 // Number of states
 #define NUMBER_OF_STATES 4
+
 /*
 Some good generator polynomials
 {{  0x6,  0x7 },  K = 3
@@ -22,7 +23,6 @@ Some good generator polynomials
  { 0x1A, 0x1D },  K = 5
  { 0x35, 0x3B }}; K = 6
  */
-
 static int generator_polynomial[ENCODER_n][K] = {
   { 1, 1, 1 },  { 1, 0, 1 }
 };
