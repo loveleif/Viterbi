@@ -6,6 +6,10 @@
 #include "DecoderBrute.h"
 int main() {
   int in, out, i, j;
+
+  init_output_table();
+  init_encoding_table();
+
   /*
   in = 0; out = falt_encoder(in);
   printf("%d -> %d\n", in, out);

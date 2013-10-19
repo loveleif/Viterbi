@@ -3,17 +3,7 @@
 enum encoder_state { UNINITIALIZED, INITIALIZED };
 enum encoder_state this_encoder_state = UNINITIALIZED;
 
-Message encoding_table[256];
 
-/*
-int output_table[4][2] = { 
-// Input: 0  1
-		 {0, 3}, // Current state = 00
-		 {3, 0}, // Current state = 01
-		 {2, 1}, // Current state = 10
-		 {1, 2}  // Current state = 11 
-};
-*/
 
 void init_output_table() {
   int state, window, input, digit, output, p, n;
@@ -47,7 +37,6 @@ Message falt_encoder(Data data) {
 		input = (data >> i) & 1;
 
 		output = output_table[state][input];
-    //output = input ^ 
 		
     message <<= m;
     message |= output;
@@ -61,13 +50,11 @@ Message falt_encoder(Data data) {
 }
 
 Message memory_falt_encoder(Data data) {
-  if (this_encoder_state == UNINITIALIZED)
-    init_encoding_table();
   return encoding_table[data];
 }
 
 void init_encoding_table() {
   int i;
-  for (i = 0; i < 256; ++i)
+  for (i = 0; i < DATA_MAX; ++i)
     encoding_table[i] = falt_encoder(i);
 }

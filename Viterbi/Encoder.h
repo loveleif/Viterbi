@@ -28,6 +28,7 @@ static int generator_polynomial[ENCODER_n][K] = {
 };
 
 int output_table[NUMBER_OF_STATES][ENCODER_n];
+Message encoding_table[DATA_MAX];
 
 Message falt_encoder(Data data);
 Message memory_falt_encoder(Data data);
