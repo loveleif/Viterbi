@@ -17,7 +17,7 @@ Data brute_force_viterbi_decoder(Message data) {
   int dist;
   Data best_fit;
   int i;
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < DATA_MAX; ++i) {
     dist = hamdist(memory_falt_encoder(i), data);
     if (dist < min_dist) {
       min_dist = dist;

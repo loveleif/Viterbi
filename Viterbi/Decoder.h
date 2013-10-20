@@ -6,6 +6,7 @@
 #include "Encoder.h"
 #include "Util.h"
 #include <math.h>
+#include "Config.h"
 
 Data viterbi_decoder(Message encoded_message);
 

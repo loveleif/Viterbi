@@ -87,6 +87,7 @@
     <ClCompile Include="Util.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="DecoderBrute.h" />
