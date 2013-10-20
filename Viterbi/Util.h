@@ -8,5 +8,6 @@
 
 
 char *byte_to_binary(int x, int digits);
+//char random_bit();
 
 #endif

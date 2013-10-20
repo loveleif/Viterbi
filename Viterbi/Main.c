@@ -9,8 +9,7 @@
 #define LOOP_N 50000
 
 /* Would like a semi-open interval [min, max) */
-int random_in_range(unsigned int min, unsigned int max)
-{
+int random_in_range(unsigned int min, unsigned int max) {
 	  int range       = max - min,
       remainder   = RAND_MAX % range,
       bucket      = RAND_MAX / range;
@@ -61,7 +60,7 @@ int main() {
   */
   
   printf("K;m;ENCODER_n;NUMBER_OF_STATES;DATA_SIZE;MESSAGE_SIZE;Runs;BitErrorProbability;TransmittedBits;TransmittedBytes;BitErrors;BitErrorRate;ByteErrors;ByteErrorRate\n");
-  for (bit_error_prob = 0.001; bit_error_prob <= 0.20; bit_error_prob += 0.001) {
+  for (bit_error_prob = 0.01; bit_error_prob <= 0.20; bit_error_prob += 0.01) {
     bit_errors = 0; byte_errors = 0;
     for (i = 0; i < LOOP_N; ++i) {
       in = random_in_range(0, DATA_MAX);
