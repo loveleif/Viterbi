@@ -65,7 +65,7 @@ int main() {
     for (i = 0; i < LOOP_N; ++i) {
       in = random_in_range(0, DATA_MAX);
 	    out = memory_falt_encoder(in);
-      outerr = bit_error(out, bit_error_prob, MESSAGE_SIZE);
+      outerr = out; //bit_error(out, bit_error_prob, MESSAGE_SIZE);
 	    decoded = brute_force_viterbi_decoder(outerr);
 	    dist = hamdist(in, decoded);
       bit_errors += dist;

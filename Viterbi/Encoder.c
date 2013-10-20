@@ -38,14 +38,14 @@ Message falt_encoder(Data data) {
 
 		output = output_table[state][input];
 		
-    message <<= m;
+    message <<= ENCODER_n;
     message |= output;
     
     // Next state
     state = (state >> 1);
     state |= input << 1;
 	}
-  message <<= 2*m;
+  message <<= m*ENCODER_n;
 	return message;
 }
 
