@@ -37,6 +37,25 @@ int bit_error(int in, double bit_error_prob, int digits) {
   return errors ^ in;
 }
 
+void best_poly() {
+  int poly = 0;
+  int poly_max = 2, i, j, k, mask = 0;
+  
+  for (i = 0; i < ENCODER_n * K-1; ++i) poly_max *= 2;
+  for (i = 0; i < K; ++i) { mask <<= 1; mask |= 1; }
+
+  for (i = 0; i < poly_max; ++i) {
+    for (j = 0; j < K; ++j) {
+      generator_polynomial[j] = i & (mask << j);
+      for (k = 0; k < DATA_MAX; ++k) {
+        //...
+      }
+    }
+  }
+}
+
+
+
 int main() {
   int i, j, in, out, outerr, decoded, dist;
   int bit_errors = 0, byte_errors = 0;

@@ -6,21 +6,23 @@ enum encoder_state this_encoder_state = UNINITIALIZED;
 
 
 void init_output_table() {
-  int state, window, input, digit, output, p, n;
+  int state, window, input, digit, output, p, n, poly;
   for (input = 0; input != 2; ++input) {
     for (state = 0; state != NUMBER_OF_STATES; ++state) {
       output_table[state][input] = 0;
       for (n = 0; n != ENCODER_n; ++n) {
         output = INT_MAX;
         window = state | (input << m);
-        for (p = K - 1; p != -1; --p) {
-          if (generator_polynomial[n][p]) {
+        poly = generator_polynomial[n];
+        for (p = 0; p != K; ++p) {
+          if (poly & 1) {
             if (output == INT_MAX) 
               output = window & 1;
             else 
               output ^= window & 1;
           }
           window >>= 1;
+          poly >>= 1;
         }
         output_table[state][input] <<= 1;
         output_table[state][input] |= output;

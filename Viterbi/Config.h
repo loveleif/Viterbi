@@ -1,7 +1,7 @@
 #ifndef VITERBI_CONFIG_H
 #define VITERBI_CONFIG_H
 
-#define VITERBI_CONFIG_K5
+#define VITERBI_CONFIG_K3
 
 /*
 CONFIGURATION TEMPLATE
@@ -41,9 +41,7 @@ static int generator_polynomial[ENCODER_n][K] = {
   #define m 2
   #define ENCODER_n 2
   #define NUMBER_OF_STATES 4
-  static int generator_polynomial[ENCODER_n][K] = {
-    { 1, 1, 1 },  { 1, 0, 1 }
-  };
+  static int generator_polynomial[K] = { 7, 5 };
 #endif
 #ifdef VITERBI_CONFIG_K4
   #define DATA_SIZE 8
