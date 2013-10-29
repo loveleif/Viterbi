@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Config.c" />
     <ClCompile Include="DecoderBrute.cpp" />
     <ClCompile Include="Decoder.c" />
     <ClCompile Include="Encoder.c" />

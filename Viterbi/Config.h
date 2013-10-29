@@ -2,7 +2,7 @@
 #define VITERBI_CONFIG_H
 
 #define VITERBI_CONFIG_K3
-
+#include <stdlib.h>
 /*
 CONFIGURATION TEMPLATE
 ======================
@@ -32,6 +32,9 @@ static int generator_polynomial[ENCODER_n][K] = {
 //  { 1, 1, 0, 1, 0 }, { 1, 1, 1, 0, 1 },  K = 5
 //  { 1, 1, 0, 1, 0, 1 } { 1, 1, 1, 0, 1, 1 }}; K = 6
 */
+void init();
+void re_init();
+int* generator_polynomial;
 
 #ifdef VITERBI_CONFIG_K3
   #define DATA_SIZE 8
@@ -41,7 +44,8 @@ static int generator_polynomial[ENCODER_n][K] = {
   #define m 2
   #define ENCODER_n 2
   #define NUMBER_OF_STATES 4
-  static int generator_polynomial[K] = { 7, 5 };
+  #define GEN_POLY_0 0x7
+  #define GEN_POLY_1 0x5
 #endif
 #ifdef VITERBI_CONFIG_K4
   #define DATA_SIZE 8
@@ -50,10 +54,9 @@ static int generator_polynomial[ENCODER_n][K] = {
   #define K 4
   #define m 3
   #define ENCODER_n 2
-  #define NUMBER_OF_STATES 4
-  static int generator_polynomial[ENCODER_n][K] = {
-    { 1, 1, 0, 1 },  { 1, 1, 1, 0 }
-  };
+  #define NUMBER_OF_STATES 8
+  #define GEN_POLY_0 0xD
+  #define GEN_POLY_1 0xE
 #endif
 #ifdef VITERBI_CONFIG_K5
   #define DATA_SIZE 8
@@ -62,10 +65,9 @@ static int generator_polynomial[ENCODER_n][K] = {
   #define K 5
   #define m 4
   #define ENCODER_n 2
-  #define NUMBER_OF_STATES 4
-  static int generator_polynomial[ENCODER_n][K] = {
-    { 1, 1, 0, 1 },  { 1, 1, 1, 0 }
-  };
+  #define NUMBER_OF_STATES 16
+  #define GEN_POLY_0 0x1A
+  #define GEN_POLY_1 0x1D
 #endif
 #ifdef VITERBI_CONFIG_K6
   #define DATA_SIZE 8
@@ -74,10 +76,9 @@ static int generator_polynomial[ENCODER_n][K] = {
   #define K 6
   #define m 5
   #define ENCODER_n 2
-  #define NUMBER_OF_STATES 4
-  static int generator_polynomial[ENCODER_n][K] = {
-    { 1, 1, 0, 1, 0, 1 }, { 1, 1, 1, 0, 1, 1 }
-  };
+  #define NUMBER_OF_STATES 32
+  #define GEN_POLY_0 0x35
+  #define GEN_POLY_1 0x3B
 #endif
 
 

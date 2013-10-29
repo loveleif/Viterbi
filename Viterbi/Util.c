@@ -1,18 +1,33 @@
 #include "Util.h"
 #define RAND_DIGITS 15
 
-char* byte_to_binary(int x, int digits) {
+/*
+void print_binary(int x, int digits) {
   int i;
-  static char out[64];
-  
+  for (i = digits; i != 0; --i) {
+    if ((x >> i) & 1)
+      printf("1");
+    else
+      printf("0");
+  }
+}
+*/
+
+char* byte_to_binary(int x, int digits, int group) {
+  int i;
+  static char buffer[127];
+  char* current = buffer;
+
   for (i = 0; i < digits; ++i) {
     if ((x >> digits - i - 1) & 1)
-      out[i] = '1';
+      *current = '1';
     else
-      out[i] = '0';
+      *current = '0';
+    if (group > 0 && (i+1) % group == 0) *++current = ' ';
+    ++current;
   }
-  out[digits] = '\0';
-  return out;
+  *current = '\0';
+  return buffer;
 }
 
 /*

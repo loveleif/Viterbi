@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-char *byte_to_binary(int x, int digits);
+char *byte_to_binary(int x, int digits, int group);
 //char random_bit();
 
 #endif

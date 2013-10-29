@@ -1,30 +1,11 @@
-#include "Config.h"
 #include<stdio.h>
+#include "Config.h"
 #include "Source.h"
 #include "Encoder.h"
 #include "Util.h"
 #include "Decoder.h"
 #include "DecoderBrute.h"
-
-#define LOOP_N 50000
-
-/* Would like a semi-open interval [min, max) */
-int random_in_range(unsigned int min, unsigned int max) {
-	  int range       = max - min,
-      remainder   = RAND_MAX % range,
-      bucket      = RAND_MAX / range;
-	int base_random = rand(); /* in [0, RAND_MAX] */
-  if (RAND_MAX == base_random) return random_in_range(min, max);
-  /* now guaranteed to be in [0, RAND_MAX) */
-
-  /* There are range buckets, plus one smaller interval
-     within remainder of RAND_MAX */
-  if (base_random < RAND_MAX - remainder) {
-    return min + base_random/bucket;
-  } else {
-    return random_in_range (min, max);
-  }
-}
+#include <assert.h>
 
 int bit_error(int in, double bit_error_prob, int digits) {
   int errors = 0;
@@ -37,70 +18,71 @@ int bit_error(int in, double bit_error_prob, int digits) {
   return errors ^ in;
 }
 
-void best_poly() {
+void print_simu_head() {
+  int i;
+  printf("K;m;ENCODER_n;NUMBER_OF_STATES;DATA_SIZE;MESSAGE_SIZE;Runs;BitErrorProbability;TransmittedBits;TransmittedBytes;BitErrors;BitErrorRate;ByteErrors;ByteErrorRate");
+  for (i = 0; i < ENCODER_n; ++i) printf(";poly%d", i);
+  printf("\n");
+}
+
+void simu(double min_bit_error, double max_bit_error, double bit_error_step, int n) {
+  double bit_error_rate;
+  int i, dist, bit_errors, data_errors;
+  Data data;
+  Message message;
+  if (n % DATA_MAX != 0) n = (DATA_MAX + 1) * (n / DATA_MAX);
+
+  for (bit_error_rate = min_bit_error; bit_error_rate <= max_bit_error; bit_error_rate += bit_error_step) {
+    bit_errors = 0;
+    data_errors = 0;
+    for (i = 0; i < n; ++i) {
+      data = i % DATA_MAX;
+      message = bit_error(memory_falt_encoder(data), bit_error_rate, MESSAGE_SIZE);
+      dist = hamdist(data, brute_force_viterbi_decoder(message));
+      bit_errors += dist;
+      if (dist) ++data_errors;
+    }
+    printf("%d;%d;%d;%d;%d;%d;%d;%f;%d;%d;%d;%f;%d;%f", K, m, ENCODER_n, NUMBER_OF_STATES, DATA_SIZE, MESSAGE_SIZE, n, bit_error_rate, n*MESSAGE_SIZE, n, bit_errors, ((double) bit_errors)/(((double)n)*DATA_SIZE), data_errors, ((double) data_errors)/n);
+    for (i = 0; i < ENCODER_n; ++i) printf(";%d", generator_polynomial[i]);
+    printf("\n");
+
+  }
+}
+
+
+void best_poly(double min_bit_error, double max_bit_error, double bit_error_step, int n) {
   int poly = 0;
+  int test_poly, test_poly_correct, useless;
   int poly_max = 2, i, j, k, mask = 0;
   
   for (i = 0; i < ENCODER_n * K-1; ++i) poly_max *= 2;
   for (i = 0; i < K; ++i) { mask <<= 1; mask |= 1; }
 
+  print_simu_head();
   for (i = 0; i < poly_max; ++i) {
-    for (j = 0; j < K; ++j) {
-      generator_polynomial[j] = i & (mask << j);
-      for (k = 0; k < DATA_MAX; ++k) {
-        //...
-      }
+    poly = i;
+    test_poly = 0;
+    useless = 0;
+    for (j = 0; j < ENCODER_n; ++j) {
+      generator_polynomial[j] = poly & mask;
+      test_poly |= generator_polynomial[j];
+      if (!generator_polynomial[j]) { useless = 1; break; }
+      poly >>= K;
+    }
+    // Fulhack
+    if (generator_polynomial[0] > generator_polynomial[1] && test_poly == mask && !useless) {
+      re_init();
+      simu(min_bit_error, max_bit_error, bit_error_step, n);
     }
   }
 }
 
-
-
 int main() {
-  int i, j, in, out, outerr, decoded, dist;
-  int bit_errors = 0, byte_errors = 0;
-  double bit_error_prob;
-  init_output_table();
-  init_encoding_table();
-  
-  /*
-  printf("K = %d\n", K);
-  printf("m = %d\n", m);
-  printf("ENCODER_n = %d\n", ENCODER_n);
-  printf("NUMBER_OF_STATES = %d\n", NUMBER_OF_STATES);
-  printf("generator_polynomial:\n");
-  for (i = 0; i < ENCODER_n; ++i) {
-    printf("{ ");
-    for (j = 0; j < K; ++j) {
-      printf(" %d ", generator_polynomial[i][j]);
-    }
-    printf(" }\n");
-  }
-  */
-  
-  printf("K;m;ENCODER_n;NUMBER_OF_STATES;DATA_SIZE;MESSAGE_SIZE;Runs;BitErrorProbability;TransmittedBits;TransmittedBytes;BitErrors;BitErrorRate;ByteErrors;ByteErrorRate\n");
-  for (bit_error_prob = 0.01; bit_error_prob <= 0.20; bit_error_prob += 0.01) {
-    bit_errors = 0; byte_errors = 0;
-    for (i = 0; i < LOOP_N; ++i) {
-      in = random_in_range(0, DATA_MAX);
-	    out = memory_falt_encoder(in);
-      outerr = out; //bit_error(out, bit_error_prob, MESSAGE_SIZE);
-	    decoded = brute_force_viterbi_decoder(outerr);
-	    dist = hamdist(in, decoded);
-      bit_errors += dist;
-      if (dist) ++byte_errors;
-    }
-    //printf("%f\n", ((double) byte_errors)/LOOP_N);
-    printf("%d;%d;%d;%d;%d;%d;%d;%f;%d;%d;%d;%f;%d;%f\n", K, m, ENCODER_n, NUMBER_OF_STATES, DATA_SIZE, MESSAGE_SIZE, LOOP_N, bit_error_prob, LOOP_N*MESSAGE_SIZE, LOOP_N, bit_errors, ((double) bit_errors)/(((double)LOOP_N)*DATA_SIZE), byte_errors, ((double) byte_errors)/LOOP_N);
-  }  
-  /*
-  for (i = 0; i != NUMBER_OF_STATES; ++i) {
-    for (j = 0; j != ENCODER_n; ++j) {
-      printf("%d   ", output_table[i][j]);
-    }
-    printf("\n");
-  }
-  */
+  int i;
+  init();
+
+  best_poly(0.01, 0.201, 0.01, DATA_MAX * 50);
+
 	printf("\n");
 	return 0;
 }
